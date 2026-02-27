@@ -24,7 +24,6 @@ const Island = ({ isRotate, setIsRotate, setCurrentStage, ...props }) => {
 
     const handlePointerDown = (e) => {
       e.stopPropagation();
-      e.preventDefault();
       setIsRotate(true);
       const clientX = e.touches ? e.touches[0].clientX : e.clientX;
 
@@ -33,13 +32,11 @@ const Island = ({ isRotate, setIsRotate, setCurrentStage, ...props }) => {
 
     const handlePointerUp = (e) => {
       e.stopPropagation();
-      e.preventDefault();
       setIsRotate(false);
     };
 
     const handlePointerMove = (e) => {
       e.stopPropagation();
-      e.preventDefault();
 
       if(isRotate) {
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
