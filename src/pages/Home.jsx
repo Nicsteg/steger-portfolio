@@ -11,24 +11,28 @@ import sakura from '../assets/sakura.mp3';
 import { soundoff, soundon } from "../assets/icons";
 
 const Home = () => {
-  const audioRef = useRef(new Audio(sakura));
-  audioRef.current.volume = 0.1;
-  audioRef.current.loop = true;
+  const audioRef = useRef(null);
   const [isRotate, setIsRotate] = useState(false);
   const [currentStage, setCurrentStage] = useState(1)
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
 
   useEffect(() => {
-    const audio = audioRef.current;
-
-    if (isPlayingMusic) {
-      audio.play();
-    } else {
-      audio.pause();
+    if (!isPlayingMusic) {
+      audioRef.current?.pause();
+      return;
     }
 
+    if (!audioRef.current) {
+      const audio = new Audio(sakura);
+      audio.volume = 0.1;
+      audio.loop = true;
+      audioRef.current = audio;
+    }
+
+    audioRef.current.play();
+
     return () => {
-      audio.pause();
+      audioRef.current?.pause();
     }
   }, [isPlayingMusic])
 
@@ -70,26 +74,27 @@ const Home = () => {
       <Canvas
         className={`h-full w-full bg-transparent ${isRotate ? 'cursor-grabbing' : 'cursor-grab'}`}
         camera={{ position: [0, 0, 15], near: 0.1, far: 1000, fov: 45 }}
+        dpr={[1, 1.5]}
+        gl={{ antialias: false, powerPreference: 'high-performance' }}
       >
         <Suspense fallback={<Loader />}>
           <color attach="background" args={["#cfe7ff"]} />
           <fog attach="fog" args={["#cfe7ff", 30, 90]} />
 
-          <Stars radius={100} depth={50} count={1200} factor={2.5} saturation={0} fade speed={0.6} />
+          <Stars radius={100} depth={50} count={800} factor={2.2} saturation={0} fade speed={0.5} />
 
           <directionalLight
             position={[5, 12, 6]}
             intensity={1.8}
             castShadow
-            shadow-mapSize-width={1024}
-            shadow-mapSize-height={1024}
+            shadow-mapSize-width={512}
+            shadow-mapSize-height={512}
             shadow-camera-far={50}
           />
           <ambientLight intensity={0.45} />
           <pointLight
             position={[8, 6, 8]}
-            intensity={0.8}
-            castShadow
+            intensity={0.7}
           />
           <hemisphereLight
             skyColor={0xb1e1ff}
