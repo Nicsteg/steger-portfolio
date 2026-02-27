@@ -1,4 +1,4 @@
-import React, { Suspense, useRef, useState } from 'react';
+import { Suspense, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { Canvas } from '@react-three/fiber';
 import Fox from '../models/Fox';
@@ -7,7 +7,6 @@ import useAlert from '../hooks/useAlert';
 import Alert from '../components/Alert';
 
 const Contact = () => {
-  const formRef = useRef(null);
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [currentAnimation, setCurrentAnimation] = useState('idle');
@@ -36,7 +35,7 @@ const Contact = () => {
         message: form.message,
       },
       import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
-    ).then((result) => {
+    ).then(() => {
       setIsLoading(false);
       showAlert({ text: 'Email sent successfully', type: 'success' });
       setTimeout(() => { 
@@ -44,7 +43,7 @@ const Contact = () => {
         setCurrentAnimation('idle');
         setForm({ name: '', email: '', message: '' });
       }, 3000);
-    }).catch((err) => {
+    }).catch(() => {
       setCurrentAnimation('idle');
       setIsLoading(false);
       showAlert({ text: 'Error sending email', type: 'danger' });

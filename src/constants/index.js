@@ -1,29 +1,16 @@
-import { meta, shopify, starbucks, tesla } from "../assets/images";
 import {
-    car,
     contact,
     css,
-    estate,
     express,
-    git,
     github,
     html,
     javascript,
     linkedin,
     mongodb,
-    motion,
-    mui,
     nextjs,
     nodejs,
-    pricewise,
     react,
-    redux,
-    sass,
-    snapgram,
-    summiz,
-    tailwindcss,
-    threads,
-    typescript
+    tailwindcss
 } from "../assets/icons";
 
 export const skills = [
@@ -120,12 +107,12 @@ export const socialLinks = [
     {
         name: 'GitHub',
         iconUrl: github,
-        link: 'https://github.com/YourGitHubUsername',
+        link: 'https://github.com/Nicsteg',
     },
     {
         name: 'LinkedIn',
         iconUrl: linkedin,
-        link: 'https://www.linkedin.com/in/YourLinkedInUsername',
+        link: 'https://www.linkedin.com/in/nicolas-steger/',
     }
 ];
 
@@ -134,7 +121,7 @@ export const projects = [
         iconUrl: react, // Assuming use of Redux in complex state management
         theme: 'btn-back-green',
         name: 'Voluntree',
-        description: 'Developed a website using Bootstrap-react and Meteor for the community of Hawaii to find volunteer oportunities.',
+        description: 'Developed a website using Bootstrap-react and Meteor for the community of Hawaii to find volunteer opportunities.',
         link: 'https://github.com/Team-Octagon/voluntree',
     },
     {

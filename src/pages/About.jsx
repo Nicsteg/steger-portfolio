@@ -1,4 +1,3 @@
-import React from 'react'
 import { skills, experiences } from '../constants'
 import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
@@ -8,7 +7,7 @@ const About = () => {
   return (
     <section className='max-container'>
       <h1 className='head-text'>
-        Hello, I'm <span className='blue-gradient_text font-semibold drop-shadow'>Nicolas</span>
+        Hello, I&apos;m <span className='blue-gradient_text font-semibold drop-shadow'>Nicolas</span>
         </h1>
         <div className='mt-5 flex flex-col gap-3 text-slate-500'>
           <p>
@@ -21,8 +20,8 @@ const About = () => {
           </h3>
           <div className="mt-16 flex flex-wrap gap-12 justify-center">
             {skills.map((skill) => (
-              <div className="block-container w-20 h-20">
-                < div className="btn-back rounded-xl"/>
+              <div className="block-container w-20 h-20" key={skill.name}>
+                <div className="btn-back rounded-xl"/>
                 <div className="btn-front rounded-xl flex justify-center items-center">
                   <img src={skill.imageUrl} 
                   alt={skill.name} 

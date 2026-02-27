@@ -18,12 +18,16 @@ const Home = () => {
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
 
   useEffect(() => {
+    const audio = audioRef.current;
+
     if (isPlayingMusic) {
-      audioRef.current.play();
+      audio.play();
+    } else {
+      audio.pause();
     }
-     
+
     return () => {
-      audioRef.current.pause();
+      audio.pause();
     }
   }, [isPlayingMusic])
 
@@ -45,7 +49,7 @@ const Home = () => {
 
     if (window.innerWidth < 768) {
       screenScale = [1.5, 1.5, 1.5];
-      screenPosition = [0, -1.5, -0];
+      screenPosition = [0, -1.5, 0];
     } else {
       screenScale = [3, 3, 3];
       screenPosition = [0, -4, -4];
@@ -57,7 +61,6 @@ const Home = () => {
   const [ planeScale, planePosition ] = adjustPlaneForScreenSize();
 
   return (
-    console.log(currentStage),
     <section className="w-full h-screen relative">
       <div className="absolute top-28 left-0 right-0 z-10 flex items-center justify-center">
         {currentStage && <HomeInfo currentStage={currentStage}/>}
