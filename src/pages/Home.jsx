@@ -1,5 +1,6 @@
 import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas } from '@react-three/fiber';
+import { Stars } from '@react-three/drei';
 import Loader from '../components/Loader';
 import Island from '../models/Island';
 import Sky from '../models/Sky'; 
@@ -61,38 +62,44 @@ const Home = () => {
   const [ planeScale, planePosition ] = adjustPlaneForScreenSize();
 
   return (
-    <section className="w-full h-screen relative">
-      <div className="absolute top-28 left-0 right-0 z-10 flex items-center justify-center">
+    <section className="relative h-screen w-full">
+      <div className="absolute left-0 right-0 top-28 z-10 flex items-center justify-center">
         {currentStage && <HomeInfo currentStage={currentStage}/>}
       </div>
-      <Canvas className={`w-full h-full bg-transparent ${isRotate ? 'cursor-grabbing' : 'cursor-grab'}`}
-       camera={{ near: 0.1, far: 1000}}>
-        
-        <Suspense fallback={<Loader />}> 
+
+      <Canvas
+        className={`h-full w-full bg-transparent ${isRotate ? 'cursor-grabbing' : 'cursor-grab'}`}
+        camera={{ position: [0, 0, 15], near: 0.1, far: 1000, fov: 45 }}
+      >
+        <Suspense fallback={<Loader />}>
+          <color attach="background" args={["#cfe7ff"]} />
+          <fog attach="fog" args={["#cfe7ff", 30, 90]} />
+
+          <Stars radius={100} depth={50} count={1200} factor={2.5} saturation={0} fade speed={0.6} />
+
           <directionalLight
-            position={[5, 10, 7.5]}
-            intensity={1.5}
+            position={[5, 12, 6]}
+            intensity={1.8}
             castShadow
             shadow-mapSize-width={1024}
             shadow-mapSize-height={1024}
             shadow-camera-far={50}
           />
-          <ambientLight intensity={0.3} />
+          <ambientLight intensity={0.45} />
           <pointLight
-            position={[10, 10, 10]}
-            intensity={1}
+            position={[8, 6, 8]}
+            intensity={0.8}
             castShadow
           />
           <hemisphereLight
-            skyColor={0xffffbb}
-            groundColor={0x080820}
-            intensity={0.5}
+            skyColor={0xb1e1ff}
+            groundColor={0x223344}
+            intensity={0.65}
           />
+
           <Bird />
-          <Sky 
-            isRotate={isRotate}
-          />
-          <Island 
+          <Sky />
+          <Island
             isRotate={isRotate}
             setIsRotate={setIsRotate}
             setCurrentStage={setCurrentStage}
@@ -100,7 +107,7 @@ const Home = () => {
             rotation={rotation}
             scale={screenScale}
           />
-          <Plane 
+          <Plane
             isRotate={isRotate}
             scale={planeScale}
             position={planePosition}
@@ -108,11 +115,16 @@ const Home = () => {
           />
         </Suspense>
       </Canvas>
+
+      <p className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/35 px-4 py-1 text-xs font-medium text-white backdrop-blur-sm">
+        Drag to rotate the island
+      </p>
+
       <div className="absolute bottom-2 left-2">
-        <img 
+        <img
           src={!isPlayingMusic ? soundoff : soundon}
           alt="sound"
-          className="w-10 h-10 cursor-pointer object-contain"
+          className="h-10 w-10 cursor-pointer object-contain"
           onClick={() => setIsPlayingMusic(!isPlayingMusic)}
         />
       </div>
